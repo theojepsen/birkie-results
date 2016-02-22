@@ -48,7 +48,8 @@ async.each(raw_files, function (f, cb) {
 
   if (t.indexOf('No finish results found for this participant.') !== -1) {
     racer.dnf = true;
-    return racers.push(racer);
+    racers.push(racer);
+    return cb();
   }
 
   var overall_place_str = doc.get('//div/div/table[1]/tr/td[2]/div/table/tr[3]/td[2]').text().trim();
