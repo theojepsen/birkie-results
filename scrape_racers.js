@@ -7,7 +7,7 @@ var async = require('async');
 var path = require('path');
 
 if (process.argv.length !== 5) {
-  console.error('Usage:', process.argv[0], process.argv[1], 'EVENT_ID BIBS.JSON OUT_DIR');
+  console.error('Usage:', process.argv[0], process.argv[1], ' EVENT_ID  BIBS.JSON  HTML_OUT_DIR');
   process.exit(1);
 }
 

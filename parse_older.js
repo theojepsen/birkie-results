@@ -4,7 +4,7 @@ var fs = require('fs');
 var async = require('async');
 
 if (process.argv.length < 3) {
-  console.error('Usage:', process.argv[0], process.argv[1], ' RAW_DIR [OUT.JSON]');
+  console.error('Usage:', process.argv[0], process.argv[1], ' HTML_OUT_DIR  [OUT.JSON]');
   process.exit(1);
 }
 
