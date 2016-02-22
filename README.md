@@ -31,3 +31,14 @@ Print results for racer with bib #2:
 ```bash
 $ node ../print_racer.js results_2013.json 2
 ```
+
+### Count skiers that did multiple races
+
+```bash
+$ node same_names.js results_2010.json results_2015.json results_2016.json
+Duplicate names for each year:
+	 results_2010.json: 11
+	 results_2015.json: 49
+	 results_2016.json: 62
+Number of racers in all races: 1985
+```
