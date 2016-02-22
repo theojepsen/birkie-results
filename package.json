@@ -1,0 +1,29 @@
+{
+  "name": "birkie-results",
+  "version": "0.0.1",
+  "description": "Scrape and parse Birkie online results",
+  "main": "",
+  "scripts": {
+    "test": "node check.js raw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theojepsen/birkie-results.git"
+  },
+  "keywords": [
+    "birkie",
+    "parse",
+    "scrape"
+  ],
+  "author": "Theo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theojepsen/birkie-results/issues"
+  },
+  "homepage": "https://github.com/theojepsen/birkie-results",
+  "dependencies": {
+    "async": "^1.5.2",
+    "libxmljs": "^0.17.1",
+    "request": "^2.69.0"
+  }
+}
