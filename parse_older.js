@@ -31,8 +31,9 @@ async.each(raw_files, function (f, cb) {
   var doc = libxmljs.parseHtml(t);
   var racer = {};
 
-  racer.name = doc.get('//div[3]/div/div/div[2]/table[1]/tbody/tr/td/div[2]/h3').text();
-  racer.event = doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[2]/td[2]').text();
+  racer.name = doc.get('//div[3]/div/div/div[2]/table[1]/tbody/tr/td/div[2]/h3').text().trim();
+  racer.event = doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[2]/td[2]').text().trim();
+  racer.wave = doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[3]/td[2]').text().trim();
   racer.bib = parseInt(doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[4]/td[2]').text(), 10);
   racer.age = parseInt(doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[5]/td[2]').text(), 10);
   racer.gender = doc.get('//div[3]/div/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr[6]/td[2]').text().trim();
