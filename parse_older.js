@@ -19,7 +19,8 @@ var raw_files = fs.readdirSync(raw_dir_path).map(function (f) { return path.join
 var rePlace = /^(\d+).*out of (\d+)/;
 var rePlaceAg = /^(\d+).*out of (\d+) .*in (.*)/;
 var reClean = /[^\x00-\x7F]|\r|\n/g;
-var reOrigin = /([^,]+)\s*,\s+(\w\w)\s+(USA)/;
+var reOriginUSA = /([^,]+)\s*,\s+(\w\w)\s+(USA|United States)$/i;
+var reOriginCan = /([^,]+)\s*,\s+(\w\w)\s+(Can)$/i;
 
 function nodeText(n) { return n.text().trim(); }
 
@@ -38,8 +39,10 @@ async.each(raw_files, function (f, cb) {
 
   var orig_str = doc.get('//div[3]/div/div/div[2]/table[1]/tbody/tr/td/div[2]/span').text().trim();
   var m;
-  if ((m = orig_str.match(reOrigin)))
-    racer.origin = m.slice(1).join(', ');
+  if ((m = orig_str.match(reOriginUSA)))
+    racer.origin = m.slice(1, 3).concat(['USA']).join(', ');
+  else if ((m = orig_str.match(reOriginCan)))
+    racer.origin = m.slice(1, 3).concat(['Can']).join(', ');
   else
     racer.origin = orig_str;
 
@@ -84,6 +87,7 @@ async.each(raw_files, function (f, cb) {
     };
 
   racers.push(racer);
+  cb();
 },
 function done(err) {
   if (err)
