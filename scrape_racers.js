@@ -29,15 +29,21 @@ else
 var url_template = 'http://results.birkie.com/participant.php?event_id=%1&bib=%2';
 var url_event = url_template.replace('%1', event_id);
 
-async.eachLimit(bibs, 4, function (bib, cb) {
-  var racer_url = url_event.replace('%2', bib);
-  console.log('Downloading', racer_url);
-
-  var urlObj = url.parse(racer_url);
-
+var need_bibs = bibs.map(function (bib) {
+  var o = {};
+  o.racer_url = url_event.replace('%2', bib);
+  var urlObj = url.parse(o.racer_url);
   var filename = urlObj.path.split('/')[1];
-  var out_file = fs.createWriteStream(path.join(out_dir, filename));
-  var request = http.get(racer_url, function (res) {
+  o.out_path = path.resolve(path.join(out_dir, filename));
+  return o;
+}).filter(function (o) {
+  return !fs.existsSync(o.out_path);
+});
+
+async.eachLimit(need_bibs, 4, function (o, cb) {
+  console.log('Downloading', o.racer_url);
+  var out_file = fs.createWriteStream(o.out_path);
+  var request = http.get(o.racer_url, function (res) {
     res.pipe(out_file);
     res.on('end', cb);
   });
@@ -46,5 +52,3 @@ function done(err) {
   if (err)
     console.error(err);
 });
-
-
