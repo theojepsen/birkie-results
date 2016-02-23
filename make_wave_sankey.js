@@ -46,41 +46,42 @@ function findDup(l) {
 function getWave(r, year) {
   if (r.wave) {
     var m;
-    if ((m = r.wave.match(/ ([0-9]+) /)))
+    if ((m = r.wave.match(/ ([0-9]+)/)))
       return parseInt(m[1], 10);
     if ((m = r.wave.match(/elite/i)))
       return 0;
+    if ((m = r.wave.match(/spirit of/i)))
+      return 35;
   }
   if (r.bib < 1000)
     return 0;
-  if (r.bib < 2000)
+  if (r.bib < 2000 || (r.bib > 10000 && (r.bib - 10000 < 2000)))
     return 1;
-  if (r.bib < 3000)
+  if (r.bib < 3000 || (r.bib > 10000 && (r.bib - 10000 < 3000)))
     return 2;
-  if (r.bib < 4000)
+  if (r.bib < 4000 || (r.bib > 10000 && (r.bib - 10000 < 4000)))
     return 3;
-  if (r.bib < 5000)
+  if (r.bib < 5000 || (r.bib > 10000 && (r.bib - 10000 < 5000)))
     return 4;
-  if (r.bib < 6000)
+  if (r.bib < 6000 || (r.bib > 10000 && (r.bib - 10000 < 6000)))
     return 5;
-  if (r.bib < 7000)
+  if (r.bib < 7000 || (r.bib > 10000 && (r.bib - 10000 < 7000)))
     return 6;
-  if (r.bib < 8000)
+  if (r.bib < 8000 || (r.bib > 10000 && (r.bib - 10000 < 8000)))
     return 7;
-  if (r.bib < 9000)
+  if (r.bib < 9000 || (r.bib > 10000 && (r.bib - 10000 < 9000)))
     return 8;
-  if (r.bib < 10000)
+  if (r.bib < 10000 || (r.bib > 10000 && (r.bib - 10000 < 10000)))
     return 9;
-  if (r.bib < 11000)
-    return 10;
-  if (r.bib < 12000)
-    return 11;
-  if (r.bib < 80000)
+  if (35000 <= r.bib && r.bib < 36000)
+    return 35;
+  if (70000 <= r.bib && r.bib < 80000)
     return 70;
+  if (90000 <= r.bib && r.bib < 100000)
+    return 90;
 }
 
-var years = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
-years = [2011, 2012, 2013, 2014, 2015, 2016];
+var years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016];
 var results = {};
 years.forEach(function (y) {
   results[y] = require(path.resolve('out/results_' + y + '.json'));
@@ -109,10 +110,6 @@ all_names.forEach(function (n) {
       waves.push(y + '.' + r.waveNum);
   });
   if (waves.length < 2) return;
-  //if (waves.length > 0) {
-  //console.log(formatName(n));
-  //console.log(waves);
-  //}
   for (i = 0; i < waves.length - 1; i++) {
     if (node_names.indexOf(waves[i]) === -1) {
       node_names.push(waves[i]);
@@ -146,5 +143,3 @@ console.log(links);
 var data = {nodes: nodes, links: links};
 var out_file = process.argv[2] || 'sankey_data.json';
 fs.writeFileSync(out_file, JSON.stringify(data));
-//console.log(JSON.stringify(data));
-
